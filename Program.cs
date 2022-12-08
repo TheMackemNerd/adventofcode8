@@ -52,10 +52,10 @@
             int height = matrix[r, c];
 
             //Extract a 1-dimensional array of trees fanning out in each direction from the source tree
-            int[] fromLeft = extractArray(Direction.FROM_LEFT, r, c, matrix);
-            int[] fromRight = extractArray(Direction.FROM_RIGHT, r, c, matrix);
-            int[] fromTop = extractArray(Direction.FROM_TOP, r, c, matrix);
-            int[] fromBottom = extractArray(Direction.FROM_BOTTOM, r, c, matrix);
+            int[] fromLeft = extractArray(Direction.TO_LEFT, r, c, matrix);
+            int[] fromRight = extractArray(Direction.TO_RIGHT, r, c, matrix);
+            int[] fromTop = extractArray(Direction.TO_TOP, r, c, matrix);
+            int[] fromBottom = extractArray(Direction.TO_BOTTOM, r, c, matrix);
 
             // if ANY of the 1D arrays include any tree which is higher than the source tree height, the tree is visible
             if ((fromLeft.Max() < height) || (fromRight.Max() < height) || (fromTop.Max() < height) || (fromBottom.Max() < height))
@@ -126,10 +126,10 @@ int[] extractArray(Direction dir, int row, int col, int[,] matrix)
      * 
      * The direction determines which cells are included:
      * 
-     * FROM LEFT: Row is fixed, but we take cells from the source column to left edge (col 0)
-     * FROM RIGHT: Row is fixed, but we take cells from the source column to the right edge (cols)
-     * FROM TOP: col is fixed, but we take cells from the source row to the top edge (row 0)
-     * FROM BOTTOM: col is fixed, but we take cells from the source row to the bottom edge (rows)
+     * TO LEFT: Row is fixed, but we take cells from the source column to left edge (col 0)
+     * TO RIGHT: Row is fixed, but we take cells from the source column to the right edge (cols)
+     * TO TOP: col is fixed, but we take cells from the source row to the top edge (row 0)
+     * TO BOTTOM: col is fixed, but we take cells from the source row to the bottom edge (rows)
      * 
      * 3  4  5  6  7  8
      * 1  2  3  4  5  6
@@ -137,10 +137,10 @@ int[] extractArray(Direction dir, int row, int col, int[,] matrix)
      * 2  3  1  0  2  3
      * 1  3  8  3  5  7
      * 
-     * FROM_LEFT: [6, 5]
-     * FROM_RIGHT: [8, 0, 2]
-     * FROM_TOP: [3, 5]
-     * FROM_BOTTOM: [1, 8]
+     * TO_LEFT: [6, 5]
+     * TO_RIGHT: [8, 0, 2]
+     * TO_TOP: [3, 5]
+     * TO_BOTTOM: [1, 8]
      * 
      * The first element in the array is always the cell adjacent to the source cell
      */
@@ -153,7 +153,7 @@ int[] extractArray(Direction dir, int row, int col, int[,] matrix)
         int[] newArray;
         switch (dir)
         {
-            case Direction.FROM_LEFT:
+            case Direction.TO_LEFT:
                 newArray = new int[col];
                 for (int i=0; i < col; i++)
                 {
@@ -161,14 +161,14 @@ int[] extractArray(Direction dir, int row, int col, int[,] matrix)
                 }
                 // We need to reverse the array so the direction is from the source cell to the left-edge
                 return Reverse(newArray);
-            case Direction.FROM_RIGHT:
+            case Direction.TO_RIGHT:
                 newArray = new int[cols - col-1];
                 for (int i = col+1; i < cols; i++)
                 {
                     newArray[i-col-1] = matrix[row, i];
                 }
                 return newArray;
-            case Direction.FROM_TOP:
+            case Direction.TO_TOP:
                 newArray = new int[row];
                 for (int i = 0; i < row; i++)
                 {
@@ -213,8 +213,8 @@ int[] Reverse(int[] array)
 
 public enum Direction
 {
-    FROM_LEFT,
-    FROM_RIGHT,
-    FROM_TOP,
-    FROM_BOTTOM,
+    TO_LEFT,
+    TO_RIGHT,
+    TO_TOP,
+    TO_BOTTOM,
 };
