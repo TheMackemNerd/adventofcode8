@@ -52,22 +52,22 @@
             int height = matrix[r, c];
 
             //Extract a 1-dimensional array of trees fanning out in each direction from the source tree
-            int[] fromLeft = extractArray(Direction.TO_LEFT, r, c, matrix);
-            int[] fromRight = extractArray(Direction.TO_RIGHT, r, c, matrix);
-            int[] fromTop = extractArray(Direction.TO_TOP, r, c, matrix);
-            int[] fromBottom = extractArray(Direction.TO_BOTTOM, r, c, matrix);
+            int[] toLeft = extractArray(Direction.TO_LEFT, r, c, matrix);
+            int[] toRight = extractArray(Direction.TO_RIGHT, r, c, matrix);
+            int[] toTop = extractArray(Direction.TO_TOP, r, c, matrix);
+            int[] toBottom = extractArray(Direction.TO_BOTTOM, r, c, matrix);
 
             // if ANY of the 1D arrays include any tree which is higher than the source tree height, the tree is visible
-            if ((fromLeft.Max() < height) || (fromRight.Max() < height) || (fromTop.Max() < height) || (fromBottom.Max() < height))
+            if ((toLeft.Max() < height) || (toRight.Max() < height) || (toTop.Max() < height) || (toBottom.Max() < height))
             {
                 visibleInside++;
             }
 
             //Calculate the scenic score of the tree for each direction
-            int scoreLeft = CountSmallerTrees(fromLeft, height);
-            int scoreRight = CountSmallerTrees(fromRight, height);
-            int scoreTop = CountSmallerTrees(fromTop, height);
-            int scoreBottom = CountSmallerTrees(fromBottom, height);
+            int scoreLeft = CountSmallerTrees(toLeft, height);
+            int scoreRight = CountSmallerTrees(toRight, height);
+            int scoreTop = CountSmallerTrees(toTop, height);
+            int scoreBottom = CountSmallerTrees(toBottom, height);
 
             //Calculate the total scenic score for the tree
             int scenicScore = scoreTop * scoreLeft * scoreBottom * scoreRight;
