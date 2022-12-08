@@ -1,32 +1,40 @@
 ﻿try
 {
     string path = "C:\\adventofcode\\day8\\data.txt";
-    StreamReader sr = new StreamReader(path);
+    StreamReader sr = new(path);
 
     int rows = 0;
     int cols = 0;
 
-    //Quick loop of the file to calculate the max row and col bounds
+    //Quick loop of the file to calculate the max row and col bounds for our 2D array
     while (!sr.EndOfStream)
     {
-        string line = sr.ReadLine();
-        rows = line.Length;
-        cols++;
+        string? line = sr.ReadLine();
+        if (line != null)
+        {
+            if (line.Length > cols) { cols = line.Length; };
+            rows++;
+        }
     }
     sr.Close();
 
-    //Loop again to parse the file into a two-dimensional array
-    sr = new StreamReader(path);
+    //Read the file again to parse the file into a 2D array
+    sr = new(path);
     int[,] matrix = new int[rows, cols];
-    int j = 0;
+    int row = 0;
     while (!sr.EndOfStream)
     {
-        string line = sr.ReadLine();
-        for(int i = 0; i < cols; i++)
-        {
-            matrix[j, i] = int.Parse(line.Substring(i, 1));
+        string? line = sr.ReadLine();
+        if (line != null)
+        {     
+            //Iterate through each character of the row
+            for (int col = 0; col < cols; col++)
+            {
+                //Populate the matrix
+                matrix[row, col] = int.Parse(line.Substring(col, 1)); 
+            }
+            row++;
         }
-        j++;
     }
 
     //Trees around the perimeter of the range are all visible 
@@ -192,9 +200,7 @@ int[] Reverse(int[] array)
     {
         for (int i = 0; i < array.Length / 2; i++)
         {
-            int tmp = array[i];
-            array[i] = array[array.Length - i - 1];
-            array[array.Length - i - 1] = tmp;
+            (array[array.Length - i - 1], array[i]) = (array[i], array[array.Length - i - 1]);
         }
 
         return array;
