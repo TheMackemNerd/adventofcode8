@@ -57,7 +57,7 @@
             int[] toTop = extractArray(Direction.TO_TOP, r, c, matrix);
             int[] toBottom = extractArray(Direction.TO_BOTTOM, r, c, matrix);
 
-            // if ANY of the 1D arrays include any tree which is higher than the source tree height, the tree is visible
+            // if ANY of the 1D arrays include no tree which is higher oe equal to the source tree height, the tree is visible
             if ((toLeft.Max() < height) || (toRight.Max() < height) || (toTop.Max() < height) || (toBottom.Max() < height))
             {
                 visibleInside++;
